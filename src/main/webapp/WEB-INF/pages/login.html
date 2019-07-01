@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <!--    <meta http-equiv="content-type" content="text/html" charset="utf-8">-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>登录页</title>
+
+    <!-- Bootstrap -->
+    <link href="../../css/bootstrap.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <style type="text/css">
+        .form-signin{
+            width:500px;
+        }
+    </style>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="container form-signin" >
+
+    <form >
+        <h2 class="">Please sign in </h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="text" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" onclick="login()">Sign in</button>
+    </form>
+
+</div> <!-- /container -->
+
+
+<!--&lt;!&ndash; IE10 viewport hack for Surface/desktop Windows 8 bug &ndash;&gt;-->
+<!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
+
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="../../js/plugins/jquery-3.4.1.min.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="../../js/plugins/bootstrap.min.js"></script>
+<script>
+
+    function  login() {
+        let userName = $('#inputEmail').val();
+        let password=$('#inputPassword').val();
+        $.ajax({
+            type: "POST",
+            url: "/user/login",
+            data: {
+                "userName":userName,
+                "password":password
+            },
+            success: function(msg){
+                if (msg==1){
+                    alter("登陆成功")
+                } else{
+                    alter("登陆失败")
+                }
+                window.location.href = '/index'
+            }
+        });
+    }
+</script>
+</body>
+</html>
