@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhenxin.admin.ArticleMapper">
+  <resultMap id="BaseResultMap" type="com.zhenxin.pojo.Article">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="article_id" jdbcType="INTEGER" property="articleId" />
+    <result column="article_title" jdbcType="VARCHAR" property="articleTitle" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="article_status" jdbcType="TINYINT" property="articleStatus" />
+    <result column="article_update_time" jdbcType="TIMESTAMP" property="articleUpdateTime" />
+    <result column="article_create_time" jdbcType="TIMESTAMP" property="articleCreateTime" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.zhenxin.pojo.Article">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="article_content" jdbcType="LONGVARCHAR" property="articleContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    article_id, article_title, user_id, article_status, article_update_time, article_create_time, 
+    is_deleted
+  </sql>
+  <sql id="Blob_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    article_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.zhenxin.admin.ArticleExample" resultMap="ResultMapWithBLOBs">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.zhenxin.admin.ArticleExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from article
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.zhenxin.pojo.Article">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <selectKey keyProperty="articleId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into article (article_title, user_id, article_status, 
+      article_update_time, article_create_time, 
+      is_deleted, article_content)
+    values (#{articleTitle,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{articleStatus,jdbcType=TINYINT}, 
+      #{articleUpdateTime,jdbcType=TIMESTAMP}, #{articleCreateTime,jdbcType=TIMESTAMP}, 
+      #{isDeleted,jdbcType=TINYINT}, #{articleContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhenxin.pojo.Article">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <selectKey keyProperty="articleId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="articleTitle != null">
+        article_title,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="articleStatus != null">
+        article_status,
+      </if>
+      <if test="articleUpdateTime != null">
+        article_update_time,
+      </if>
+      <if test="articleCreateTime != null">
+        article_create_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="articleContent != null">
+        article_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="articleTitle != null">
+        #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="articleStatus != null">
+        #{articleStatus,jdbcType=TINYINT},
+      </if>
+      <if test="articleUpdateTime != null">
+        #{articleUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="articleCreateTime != null">
+        #{articleCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="articleContent != null">
+        #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zhenxin.admin.ArticleExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from article
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update article
+    <set>
+      <if test="record.articleId != null">
+        article_id = #{record.articleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.articleTitle != null">
+        article_title = #{record.articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.articleStatus != null">
+        article_status = #{record.articleStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.articleUpdateTime != null">
+        article_update_time = #{record.articleUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.articleCreateTime != null">
+        article_create_time = #{record.articleCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="record.articleContent != null">
+        article_content = #{record.articleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update article
+    set article_id = #{record.articleId,jdbcType=INTEGER},
+      article_title = #{record.articleTitle,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      article_status = #{record.articleStatus,jdbcType=TINYINT},
+      article_update_time = #{record.articleUpdateTime,jdbcType=TIMESTAMP},
+      article_create_time = #{record.articleCreateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      article_content = #{record.articleContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update article
+    set article_id = #{record.articleId,jdbcType=INTEGER},
+      article_title = #{record.articleTitle,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      article_status = #{record.articleStatus,jdbcType=TINYINT},
+      article_update_time = #{record.articleUpdateTime,jdbcType=TIMESTAMP},
+      article_create_time = #{record.articleCreateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{record.isDeleted,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhenxin.pojo.Article">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update article
+    <set>
+      <if test="articleTitle != null">
+        article_title = #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="articleStatus != null">
+        article_status = #{articleStatus,jdbcType=TINYINT},
+      </if>
+      <if test="articleUpdateTime != null">
+        article_update_time = #{articleUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="articleCreateTime != null">
+        article_create_time = #{articleCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="articleContent != null">
+        article_content = #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zhenxin.pojo.Article">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update article
+    set article_title = #{articleTitle,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      article_status = #{articleStatus,jdbcType=TINYINT},
+      article_update_time = #{articleUpdateTime,jdbcType=TIMESTAMP},
+      article_create_time = #{articleCreateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      article_content = #{articleContent,jdbcType=LONGVARCHAR}
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhenxin.pojo.Article">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update article
+    set article_title = #{articleTitle,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      article_status = #{articleStatus,jdbcType=TINYINT},
+      article_update_time = #{articleUpdateTime,jdbcType=TIMESTAMP},
+      article_create_time = #{articleCreateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=TINYINT}
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+</mapper>

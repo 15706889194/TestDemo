@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <!--    <meta http-equiv="content-type" content="text/html" charset="utf-8">-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>登录页</title>
+
+    <!-- Bootstrap -->
+    <link href="../../css/bootstrap.css" rel="stylesheet">
+
+    <style type="text/css">
+        .form-signin {
+            width: 500px;
+        }
+    </style>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="container form-signin">
+
+    <form id=loginform">
+        <h2 class="">Please sign in </h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input pattern="^(0|[1-9][0-9]*)$" maxlength="10" minlength="6"  type="text" id="inputEmail" class="form-control" placeholder="用户名至少为六位数"  autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="checkFormate()">Sign in</button>
+    </form>
+
+</div> <!-- /container -->
+
+
+<!--&lt;!&ndash; IE10 viewport hack for Surface/desktop Windows 8 bug &ndash;&gt;-->
+<!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
+
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="../../js/plugins/jquery-3.4.1.min.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="../../js/plugins/bootstrap.min.js"></script>
+<script>
+    function checkFormate() {
+        if ($('#inputEmail').val() == "" ) {
+            alert("用户名不能为空");
+            return
+        }
+        if ($('#inputPassword').val() =="") {
+
+            alert("密码不能为空");
+            return;
+        }
+        // else if(!/^[0-9]{8}$/.test($('#inputPassword').val())) {
+        //     alert("密码必须为8位数字");
+        //     return;
+        // }
+            login();
+    }
+
+    function login() {
+        let userName = $('#inputEmail').val();
+        let password = $('#inputPassword').val();
+        $.ajax({
+            type: "get",
+            url: "/user/login?userName=" + userName + "&password=" + password,
+            dataType: "json",
+            async: false,
+            success: function (JsonDate) {
+                if (JsonDate.code == 0) {
+                    console.log(JsonDate.code == 0)
+                    alert("登陆成功")
+                    console.log(JsonDate.msg)
+                    window.location.href = "/index"
+                    return true
+                }
+                if (JsonDate.code == (-1)) {
+                    alert("登陆失败")
+                    return;
+                }
+            },
+            error: function (msg) {
+                console.log("erro" + JSON.stringify(msg));
+            }
+        });
+    }
+</script>
+</body>
+</html>
