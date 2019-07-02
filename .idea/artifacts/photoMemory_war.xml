@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="photoMemory:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>photoMemory</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="ssm.war">
+      <element id="artifact" artifact-name="photoMemory:war exploded" />
+    </root>
+  </artifact>
+</component>

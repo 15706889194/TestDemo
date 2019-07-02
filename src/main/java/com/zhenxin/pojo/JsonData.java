@@ -28,6 +28,11 @@ public class JsonData implements Serializable {
         return new JsonData(0,null,data);
     }
 
+    public static JsonData  buildSuccess(String msg){
+        return new JsonData(0,msg,null);
+    }
+
+
 
     public static JsonData  buildSuccess(String msg,Object data){
         return new JsonData(0,msg,data);

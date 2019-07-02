@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
     /**
      * 查找所有用户
      */
+    @Override
     public JsonData findUser() {
        UserExample userExample = new UserExample();
        List<User> users = userMapper.selectByExample(userExample);
@@ -39,6 +40,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
 
+    @Override
     public JsonData addUser(@RequestBody User user) {
         if (StringUtils.isEmpty(user.getUserName())) {
             return JsonData.buildError("用户名称不能为空");
@@ -73,6 +75,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
 
+    @Override
     public JsonData updateUser(User user) {
         user.setCreateTime(new Date());
         if(user==null){
@@ -95,6 +98,7 @@ public class UserServiceImpl implements UserService {
         return JsonData.buildSuccess("更新成功");
     }
 
+    @Override
     public JsonData deleteUser(int userId) {
         if(0==userId){
             return JsonData.buildError("用户Id不合法");
@@ -110,6 +114,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
     public JsonData login(String userName, String password) {
         if (StringUtils.isEmpty(userName)) {
             return JsonData.buildError("用户名称不能为空");
@@ -133,6 +138,6 @@ public class UserServiceImpl implements UserService {
         user1.setToken(token);
         user1.setTokenCreated(new Date());
         userMapper.updateByExampleSelective(user1,UserDao.updateToken(user.getUserId()));
-        return JsonData.buildSuccess("登陆成功");
+        return JsonData.buildSuccess("登陆成功",token);
     }
 }

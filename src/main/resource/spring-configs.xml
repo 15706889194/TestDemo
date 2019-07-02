@@ -32,6 +32,23 @@
     <!-- 启用mvc注解 -->
     <mvc:annotation-driven />
 
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/user/login"/>
+            <mvc:exclude-mapping path="/login"/>
+            <mvc:exclude-mapping path="/index"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/fonts/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <bean class="com.zhenxin.filter.TokenInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
+    
+
     <!-- 定义跳转的文件的前后缀 ，视图模式配置 -->
 <!--    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
 <!--        &lt;!&ndash; 自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 &ndash;&gt;-->
@@ -54,12 +71,12 @@
         <property name="order" value="0"/>
     </bean>
 
-    <bean id="viewResolverJsp"
-          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/pages/" />
-        <property name="suffix" value=".jsp" />
-        <property name="order" value="1"/>
-    </bean>
+<!--    <bean id="viewResolverJsp"-->
+<!--          class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+<!--        <property name="prefix" value="/WEB-INF/pages/" />-->
+<!--        <property name="suffix" value=".jsp" />-->
+<!--        <property name="order" value="1"/>-->
+<!--    </bean>-->
     <!-- 整合DRUID -->
     <util:properties id="cfg" location="classpath:config.properties"/>
 
