@@ -49,20 +49,21 @@
 <script src="../../js/plugins/bootstrap.min.js"></script>
 <script>
     function checkFormate() {
+        var reg1=/^[a-zA-Z][a-zA-Z0-9_]{1,20}$/;
+        var regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,30}');
         if ($('#inputEmail').val() == "" ) {
             alert("用户名不能为空");
             return
         }
         if ($('#inputPassword').val() =="") {
-
             alert("密码不能为空");
             return;
         }
-        // else if(!/^[0-9]{8}$/.test($('#inputPassword').val())) {
-        //     alert("密码必须为8位数字");
-        //     return;
-        // }
-            login();
+        if (!regex.test($('#inputEmail').val())) {
+            $('#inputEmail').val()
+            return;
+        }
+        login();
     }
 
     function login() {
@@ -86,9 +87,9 @@
                     return;
                 }
             },
-            error: function (msg) {
-                console.log("erro" + JSON.stringify(msg));
-            }
+            // error: function (msg) {
+            //     console.log("erro" + JSON.stringify(msg));
+            // }
         });
     }
 </script>
