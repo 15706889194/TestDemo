@@ -90,6 +90,19 @@ public class User extends BasePojo {
     private Byte isDeleted;
 
     /**
+     * 用户登陆身份标识
+     * database column is user.token
+     * @mbg.generated
+     */
+    private String token;
+
+    /**
+     * database column is user.token_created
+     * @mbg.generated
+     */
+    private Date tokenCreated;
+
+    /**
      * @return the value of user.user_id
      * @mbg.generated
      */
@@ -279,5 +292,37 @@ public class User extends BasePojo {
      */
     public void setIsDeleted(Byte isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    /**
+     * @return the value of user.token
+     * @mbg.generated
+     */
+    public String getToken() {
+        return token;
+    }
+
+    /**
+     * @param token the value for user.token
+     * @mbg.generated
+     */
+    public void setToken(String token) {
+        this.token = token == null ? null : token.trim();
+    }
+
+    /**
+     * @return the value of user.token_created
+     * @mbg.generated
+     */
+    public Date getTokenCreated() {
+        return tokenCreated;
+    }
+
+    /**
+     * @param tokenCreated the value for user.token_created
+     * @mbg.generated
+     */
+    public void setTokenCreated(Date tokenCreated) {
+        this.tokenCreated = tokenCreated;
     }
 }

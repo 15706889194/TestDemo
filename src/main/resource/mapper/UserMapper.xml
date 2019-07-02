@@ -17,6 +17,8 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
     <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="token_created" jdbcType="TIMESTAMP" property="tokenCreated" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -87,7 +89,7 @@
       WARNING - @mbg.generated
     -->
     user_id, nick_name, user_name, head_img, phone, passwd, random_serict, sex, city, 
-    create_time, modify_time, is_deleted
+    create_time, modify_time, is_deleted, token, token_created
   </sql>
   <select id="selectByExample" parameterType="com.zhenxin.pojo.UserExample" resultMap="BaseResultMap">
     <!--
@@ -134,11 +136,13 @@
     insert into user (nick_name, user_name, head_img, 
       phone, passwd, random_serict, 
       sex, city, create_time, 
-      modify_time, is_deleted)
+      modify_time, is_deleted, token, 
+      token_created)
     values (#{nickName,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{headImg,jdbcType=INTEGER}, 
       #{phone,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, #{randomSerict,jdbcType=VARCHAR}, 
       #{sex,jdbcType=TINYINT}, #{city,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{modifyTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT})
+      #{modifyTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT}, #{token,jdbcType=VARCHAR}, 
+      #{tokenCreated,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zhenxin.pojo.User">
     <!--
@@ -182,6 +186,12 @@
       <if test="isDeleted != null">
         is_deleted,
       </if>
+      <if test="token != null">
+        token,
+      </if>
+      <if test="tokenCreated != null">
+        token_created,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="nickName != null">
@@ -216,6 +226,12 @@
       </if>
       <if test="isDeleted != null">
         #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="token != null">
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenCreated != null">
+        #{tokenCreated,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -270,6 +286,12 @@
       <if test="record.isDeleted != null">
         is_deleted = #{record.isDeleted,jdbcType=TINYINT},
       </if>
+      <if test="record.token != null">
+        token = #{record.token,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tokenCreated != null">
+        token_created = #{record.tokenCreated,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -291,7 +313,9 @@
       city = #{record.city,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
-      is_deleted = #{record.isDeleted,jdbcType=TINYINT}
+      is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      token = #{record.token,jdbcType=VARCHAR},
+      token_created = #{record.tokenCreated,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -335,6 +359,12 @@
       <if test="isDeleted != null">
         is_deleted = #{isDeleted,jdbcType=TINYINT},
       </if>
+      <if test="token != null">
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenCreated != null">
+        token_created = #{tokenCreated,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
@@ -353,7 +383,9 @@
       city = #{city,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       modify_time = #{modifyTime,jdbcType=TIMESTAMP},
-      is_deleted = #{isDeleted,jdbcType=TINYINT}
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      token = #{token,jdbcType=VARCHAR},
+      token_created = #{tokenCreated,jdbcType=TIMESTAMP}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -7,6 +7,7 @@ import com.zhenxin.pojo.JsonData;
 import com.zhenxin.pojo.User;
 import com.zhenxin.pojo.UserExample;
 import com.zhenxin.service.UserService;
+import com.zhenxin.utils.JwtUtils;
 import com.zhenxin.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -121,12 +122,17 @@ public class UserServiceImpl implements UserService {
             return JsonData.buildError("该用户暂未注册");
         }
         User user=(User) users.get(0);
+        User user1=new User();
         String randomSerict = user.getRandomSerict();
         String pwd = MD5Utils.MD5(randomSerict + password);
         password = user.getPasswd();
         if(!pwd.equals(password)){
             return JsonData.buildError("用户密码错误");
         }
+        String token = JwtUtils.geneJsonWebToken(user);
+        user1.setToken(token);
+        user1.setTokenCreated(new Date());
+        userMapper.updateByExampleSelective(user1,UserDao.updateToken(user.getUserId()));
         return JsonData.buildSuccess("登陆成功");
     }
 }

@@ -30,9 +30,6 @@ public class UserController {
 
         return userService.findUser();
     }
-
-
-
     /**
      * 用户新增
      * @param user
@@ -72,7 +69,7 @@ public class UserController {
      * @param password
      * @return
      */
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
     @ResponseBody
     public  JsonData login(String userName,String password){
         return  userService.login(userName,password);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <!--    <meta http-equiv="content-type" content="text/html" charset="utf-8">-->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>登录页</title>
@@ -11,11 +11,9 @@
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.css" rel="stylesheet">
 
-    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
     <style type="text/css">
-        .form-signin{
-            width:500px;
+        .form-signin {
+            width: 500px;
         }
     </style>
     <![endif]-->
@@ -23,12 +21,12 @@
 
 <body>
 
-<div class="container form-signin" >
+<div class="container form-signin">
 
-    <form >
+    <form id=loginform">
         <h2 class="">Please sign in </h2>
         <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="text" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <input pattern="^(0|[1-9][0-9]*)$" maxlength="10" minlength="6"  type="text" id="inputEmail" class="form-control" placeholder="用户名至少为六位数"  autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
         <div class="checkbox">
@@ -36,7 +34,7 @@
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" onclick="login()">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="checkFormate()">Sign in</button>
     </form>
 
 </div> <!-- /container -->
@@ -50,24 +48,46 @@
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 <script src="../../js/plugins/bootstrap.min.js"></script>
 <script>
+    function checkFormate() {
+        if ($('#inputEmail').val() == "" ) {
+            alert("用户名不能为空");
+            return
+        }
+        if ($('#inputPassword').val() =="") {
 
-    function  login() {
+            alert("密码不能为空");
+            return;
+        }
+        // else if(!/^[0-9]{8}$/.test($('#inputPassword').val())) {
+        //     alert("密码必须为8位数字");
+        //     return;
+        // }
+            login();
+    }
+
+    function login() {
         let userName = $('#inputEmail').val();
-        let password=$('#inputPassword').val();
+        let password = $('#inputPassword').val();
         $.ajax({
-            type: "POST",
-            url: "/user/login",
-            data: {
-                "userName":userName,
-                "password":password
-            },
-            success: function(msg){
-                if (msg==1){
-                    alter("登陆成功")
-                } else{
-                    alter("登陆失败")
+            type: "get",
+            url: "/user/login?userName=" + userName + "&password=" + password,
+            dataType: "json",
+            async: false,
+            success: function (JsonDate) {
+                if (JsonDate.code == 0) {
+                    console.log(JsonDate.code == 0)
+                    alert("登陆成功")
+                    console.log(JsonDate.msg)
+                    window.location.href = "/index"
+                    return true
                 }
-                window.location.href = '/index'
+                if (JsonDate.code == (-1)) {
+                    alert("登陆失败")
+                    return;
+                }
+            },
+            error: function (msg) {
+                console.log("erro" + JSON.stringify(msg));
             }
         });
     }
