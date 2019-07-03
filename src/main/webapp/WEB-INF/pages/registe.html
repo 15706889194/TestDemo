@@ -23,52 +23,57 @@
         }
     </style>
     <script>
-        function  registe() {
-            alert($('#username').val())
-            if($('#username').val().length==0){
-                alert("用户名称不能为空")
-                return ;
-            }
+        function  checkCode() {
+          if ($('#username').val().length==0){
+              alert("用户名称不能为空")
+              return ;
+          }
             if($('#password').val().length==0) {
                 alert("密码不能为空")
                 return; ;
             }
-            commit();
+            registe();
         }
-
-        function  commit ( ) {
-            //debugger
+        function registe() {
             let username = $('#username').val();
-            //alert(username)
             let password = $('#password').val();
-            // alert(password)
             let phone=$('#phone').val();
-            //alert(phone)
             let nickName = $('#nickName').val();
-            //let sex = $('#sex').val();
             $.ajax({
-                type:"post",
-                url:"localhost:8082/user/add",
-                dataType: "json",
-                async: false,
-                data:{
+               type:"post",
+               url:"/user/add",
+                contentType:'application/json',
+                data:JSON.stringify({
                     "userName":username,
                     "phone":phone,
-                    "passwd":password
-                },
-                success:function (msg){
-                    alter(Jsom.stringify(msg))
-                    if(msg.code==0){
-                        alter("注册成功");
-                        windows.location.href("/index");
+                    "passwd":password,
+                    "nickName":nickName
+                }),
+                processData:false,
+                dataType:"json",
+                success: function (JasonDate) {
+                    if (JasonDate.code==0){
+                        alert("注册成功")
+                        window.location.href = "/index"
+                        //window.location.href("/index");
                     }
-                    if (msg.code == (-1)) {
-                        alert("登陆失败")
-                        return;
+                    if (JasonDate.code==-1){
+                        alert("注册失败")
+                        return ;
                     }
                 }
-        })
+            })
+
+        }
+
     </script>
+
+
+
+
+
+
+
 </head>
 <body>
 <h1>用户注册</h1>
@@ -98,12 +103,17 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <label  class="col-sm-2 control-label">性别</label>
-        <div class="col-sm-10" id="sex">
-            <label><input type="radio" name="sex" value="女生">女生</label>
-        </div>
-    </div>
+<!--        <label>-->
+<!--            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>-->
+<!--            男-->
+<!--        </label>-->
+<!--    </div>-->
+<!--    <div class="radio form-horizontal">-->
+<!--        <label>-->
+<!--            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">-->
+<!--           女-->
+<!--        </label>-->
+<!--    -->
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <div class="checkbox">
@@ -115,8 +125,8 @@
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button  onclick=registe()  type="botton" class="btn btn-default">注册</button>
-            <button onclick=ignore() type="botton" class="btn btn-default">随便看看</button>
+            <button  onclick="checkCode()"  type="button" class="btn btn-default">注册</button>
+            <button  onclick="ignor()"   type="button" class="btn btn-default">随便看看</button>
         </div>
     </div>
 </form>
