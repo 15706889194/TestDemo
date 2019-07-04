@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 public class TokenInterceptor implements HandlerInterceptor {
     @Autowired
     private UserMapper userMapper;
-    @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         httpServletResponse.setCharacterEncoding("utf-8");
         String token=httpServletRequest.getHeader("accessToken");
@@ -29,12 +28,12 @@ public class TokenInterceptor implements HandlerInterceptor {
         return false;
     }
 
-    @Override
+
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
 
     }
 
-    @Override
+
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
 
     }

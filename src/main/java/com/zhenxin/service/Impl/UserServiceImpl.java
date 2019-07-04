@@ -7,12 +7,14 @@ import com.zhenxin.pojo.JsonData;
 import com.zhenxin.pojo.User;
 import com.zhenxin.pojo.UserExample;
 import com.zhenxin.service.UserService;
-import com.zhenxin.utils.JwtUtils;
-import com.zhenxin.utils.MD5Utils;
+import com.zhenxin.utils.*;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import redis.clients.jedis.Jedis;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -23,7 +25,8 @@ public class UserServiceImpl implements UserService {
     MD5Utils md5Utils = new MD5Utils();
     @Autowired
     private UserMapper userMapper;
-
+    @Resource
+    private redisUtils redisPool;
     /**
      * 查找所有用户
      */
@@ -140,4 +143,49 @@ public class UserServiceImpl implements UserService {
         userMapper.updateByExampleSelective(user1,UserDao.updateToken(user.getUserId()));
         return JsonData.buildSuccess("登陆成功",token);
     }
+
+    public JsonData sendRandom(String phone,String random) {
+       if(StringUtils.isEmpty(phone)){
+           return JsonData.buildError("手机号信息有误");
+       }
+        String redisJson = redisPool.get(phone);
+        if(StringUtils.isEmpty(redisJson)){
+            return JsonData.buildError("请稍后再试");
+        }
+        if(redisJson.equals(redisJson)){
+            return JsonData.buildError("验证成功");
+        }
+        return JsonData.buildSuccess("稍后再试");
+    }
+
+    public JsonData sendRandom(String phone) {
+        if (StringUtils.isEmpty(phone)) {
+            return JsonData.buildError("手机号信息有误");
+        }
+        String result = MassageUtils.sendMessage(phone);
+        String redisJson = redisPool.get(phone);
+        if(StringUtils.isEmpty(redisJson)){
+            redisPool.set(phone,result,60*5);
+        }else{
+            redisPool.del(phone);
+            redisPool.set(phone,result,60*5);
+        }
+        return JsonData.buildSuccess("发送成功",result);
+    }
+
+    @Test
+    public void test(){
+        String phone="17521583740";
+ //       String s = MassageUtils.sendMessage(phone);
+        String s="26585265";
+        System.out.println(s);
+        redisPool.set(phone,s);
+
+    }
+
+
+
+
+
+
 }

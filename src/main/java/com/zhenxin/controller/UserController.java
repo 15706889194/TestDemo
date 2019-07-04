@@ -76,6 +76,28 @@ public class UserController {
     }
 
 
+    /**
+     * 比对验证码
+     * @param phone
+     * @return
+     */
+    @RequestMapping(value = "/message",method = RequestMethod.POST)
+    @ResponseBody
+    public  JsonData CompRandom(String phone){
+        return  userService.sendRandom(phone);
+    }
+    /**
+     * 生成验证码，存入redis
+     * @param phone
+     * @return
+     */
+    @RequestMapping(value = "/CompareMessage",method = RequestMethod.POST)
+    @ResponseBody
+    public  JsonData SendRandom(String phone,String random){
+        return  userService.sendRandom(phone,random);
+    }
+
+
 
 
 

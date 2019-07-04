@@ -28,6 +28,7 @@
 
 <!-- 自动扫描该包 -->
     <context:component-scan base-package="com.zhenxin" />
+    <import resource="classpath*:/spring-redis.xml" />
 
     <!-- 启用mvc注解 -->
     <mvc:annotation-driven />
@@ -39,7 +40,9 @@
             <mvc:exclude-mapping path="/user/login"/>
             <mvc:exclude-mapping path="/login"/>
             <mvc:exclude-mapping path="/registe"/>
-            <mvc:exclude-mapping path="/user/add/**"/>
+            <mvc:exclude-mapping path="/user/CompareMessage"/>
+            <mvc:exclude-mapping path="/user/message"/>
+            <mvc:exclude-mapping path="/registe"/>
             <mvc:exclude-mapping path="/index"/>
             <mvc:exclude-mapping path="/css/**"/>
             <mvc:exclude-mapping path="/fonts/**"/>
@@ -91,6 +94,14 @@
         <property name="password" value="#{cfg.password}" />
     </bean>
 
+<!--    <util:properties id="mes" location="classpath:message.properties"/>-->
+<!--    <bean class="com.zhenxin.pojo.Message">-->
+<!--        <property name="sdkappid" value="#{msg.sdkappid}" />-->
+<!--        <property name="appKey" value="#{msg.appKey}" />-->
+<!--        <property name="templateId" value="#{msg.templateId}"/>-->
+<!--        <property name="smsSign" value="#{msg.smsSign}"/>-->
+
+<!--    </bean>-->
     <!-- 整合mybatis -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />

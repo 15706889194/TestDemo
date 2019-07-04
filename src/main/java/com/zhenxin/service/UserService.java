@@ -17,4 +17,8 @@ public interface UserService {
     JsonData deleteUser(int userId);
 
     JsonData login(String userName, String password);
+
+    JsonData sendRandom(String phone,String random);
+
+    JsonData sendRandom(String phone);
 }

@@ -9,6 +9,9 @@
     <title>用户注册</title>
     <!-- Bootstrap -->
     <link href="../../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="../css/city-picker.css" rel="stylesheet" type="text/css" />
+    <link href="../css/main.css" rel="stylesheet" type="text/css" />
     <style>
         h1{
             text-align: center;
@@ -24,10 +27,10 @@
     </style>
     <script>
         function  checkCode() {
-          if ($('#username').val().length==0){
-              alert("用户名称不能为空")
-              return ;
-          }
+            if ($('#username').val().length==0){
+                alert("用户名称不能为空")
+                return ;
+            }
             if($('#password').val().length==0) {
                 alert("密码不能为空")
                 return; ;
@@ -40,8 +43,8 @@
             let phone=$('#phone').val();
             let nickName = $('#nickName').val();
             $.ajax({
-               type:"post",
-               url:"/user/add",
+                type:"post",
+                url:"/user/add",
                 contentType:'application/json',
                 data:JSON.stringify({
                     "userName":username,
@@ -78,7 +81,7 @@
 <body>
 <h1>用户注册</h1>
 <form class="form-horizontal" id="form">
-    <div class="form-group " >
+    <div class="form-group ">
         <label for="username" class="col-sm-2 control-label">用户名</label>
         <div class="col-sm-10">
             <input type="text" class="form-control" id="username" placeholder="Large input">
@@ -103,36 +106,56 @@
         </div>
     </div>
 
-<!--        <label>-->
-<!--            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>-->
-<!--            男-->
-<!--        </label>-->
-<!--    </div>-->
-<!--    <div class="radio form-horizontal">-->
-<!--        <label>-->
-<!--            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">-->
-<!--           女-->
-<!--        </label>-->
-<!--    -->
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox"> Remember me
-                </label>
+    用户性别：
+    <input  type="radio" id="m" value="1" name="gender">
+    <label for="m">男</label>
+    <input type="radio" id="f" value="0" name="gender">
+    <label for="f">女</label></br>
+    </input>
+<!--    <div class="form-group">-->
+<!--        <label for="city" class="col-sm-2 control-label">城市</label>-->
+<!--        <div class="col-sm-10">-->
+<!--            <div class="docs-methods">-->
+<!--                <form class="form-inline">-->
+<!--                    <div id="distpicker">-->
+<!--                        <div class="form-group">-->
+<!--                            <div style="position: relative;">-->
+<!--                                <input id="city-picker3" class="form-control" readonly type="text" value="江苏省/常州市/溧阳市" data-toggle="city-picker">-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <div class="form-group">
+                            <button class="btn btn-warning" id="reset" type="button">重置</button>
+                            <button class="btn btn-danger" id="destroy" type="button">确定</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button  onclick="checkCode()"  type="button" class="btn btn-default">注册</button>
-            <button  onclick="ignor()"   type="button" class="btn btn-default">随便看看</button>
-        </div>
     </div>
+    <div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Remember me
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button onclick="checkCode()" type="button" class="btn btn-default">注册</button>
+                <button onclick="ignor()" type="button" class="btn btn-default">随便看看</button>
+            </div>
+        </div>
 </form>
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
 <script src="../../js/plugins/jquery-3.4.1.min.js"></script>
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 <script src="../../js/plugins/bootstrap.min.js"></script>
+<script src="../../js/city-picker.data.js"></script>
+<script src="../../js/city-picker.js"></script>
+<script src="../../js/main.js"></script>
 </body>
 </html>
