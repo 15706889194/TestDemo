@@ -2,6 +2,7 @@ package com.zhenxin.controller;
 import com.zhenxin.annotation.TokenToUser;
 import com.zhenxin.pojo.Article;
 import com.zhenxin.pojo.JsonData;
+import com.zhenxin.pojo.User;
 import com.zhenxin.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,9 +23,10 @@ public class ArticleController {
      * 根据用户查询相关的博客记录
      */
 
-    public JsonData  findArticleById(@TokenToUser int userId){
+    public JsonData  findArticleById(
+            @TokenToUser User user){
         List<Article> list =new ArrayList<Article>();
-        list =articleService.findArticleById(userId);
+        list =articleService.findArticleById(user.getUserId());
         return JsonData.buildSuccess(list);
     }
 
