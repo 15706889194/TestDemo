@@ -28,7 +28,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     public List<Article> findArticleById(@RequestParam("user_id")  int userId) {
         List<Article> list =new ArrayList<Article>();
-        list=articleMapper.selectByExample(ArticleDao.findById(userId));
+        list=articleMapper.selectByExampleWithBLOBs(ArticleDao.findById(userId));
         return list;
     }
 

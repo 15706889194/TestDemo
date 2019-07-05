@@ -1,4 +1,5 @@
 package com.zhenxin.controller;
+import com.zhenxin.annotation.TokenToUser;
 import com.zhenxin.pojo.Article;
 import com.zhenxin.pojo.JsonData;
 import com.zhenxin.service.ArticleService;
@@ -20,7 +21,8 @@ public class ArticleController {
     /**
      * 根据用户查询相关的博客记录
      */
-    public JsonData  findArticleById(int userId){
+
+    public JsonData  findArticleById(@TokenToUser int userId){
         List<Article> list =new ArrayList<Article>();
         list =articleService.findArticleById(userId);
         return JsonData.buildSuccess(list);

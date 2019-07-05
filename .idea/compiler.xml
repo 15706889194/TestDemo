@@ -11,7 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="photoMemory" target="8" />
+      <module name="photoMemory" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

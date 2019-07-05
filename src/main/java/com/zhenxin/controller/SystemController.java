@@ -18,6 +18,11 @@ public class SystemController {
         return "login";
     }
 
+    @RequestMapping("/registe")
+    public String registe(){
+        return "registe";
+    }
+
 
 
 }
