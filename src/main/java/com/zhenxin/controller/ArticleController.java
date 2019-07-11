@@ -69,7 +69,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     @ResponseBody
-    public JsonData updtaeArticle(@RequestBody  Article article){
+    public JsonData updateArticle(@RequestBody  Article article){
         int result=articleService.updtaeArticle(article);
         if(result!=0){
             return JsonData.buildSuccess("修改blog成功");

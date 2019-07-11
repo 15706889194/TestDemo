@@ -80,6 +80,15 @@
     <!-- 整合DRUID -->
     <util:properties id="cfg" location="classpath:config.properties"/>
 
+    <bean id="jedis" class="redis.clients.jedis.Jedis">
+        <constructor-arg  name="host" value="${redis.host}"  />
+        <constructor-arg  name="port" value="${redis.host}"  />
+
+    </bean>
+
+
+
+
     <!--配置DruidDataSource连接池 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
           destroy-method="close" init-method="init" lazy-init="true">

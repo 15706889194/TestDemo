@@ -9,55 +9,11 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../../dist/css/font-awesome.min.css">
     <!-- Ionicons -->
-<!--    <link rel="stylesheet" href="../../dist/css/ionicons.min.css">-->
+    <!--    <link rel="stylesheet" href="../../dist/css/ionicons.min.css">-->
     <!-- Theme style -->
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
-<!--    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">-->
-    <script>
-        function checkFormate() {
-            if ($('#inputEmail').val() == "" ) {
-                alert("用户名不能为空");
-                return
-            }
-            if ($('#inputPassword').val() =="") {
+    <!--    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">-->
 
-                alert("密码不能为空");
-                return;
-            }
-            // else if(!/^[0-9]{8}$/.test($('#inputPassword').val())) {
-            //     alert("密码必须为8位数字");
-            //     return;
-            // }
-            login();
-        }
-
-        function login() {
-            let userName = $('#userName').val();
-            let password = $('#password').val();
-            $.ajax({
-                type: "get",
-                url: "/user/login?userName=" + userName + "&password=" + password,
-                dataType: "json",
-                async: false,
-                success: function (JsonDate) {
-                    if (JsonDate.code == 0) {
-                        console.log(JsonDate.code == 0)
-                        alert("登陆成功")
-                        console.log(JsonDate.msg)
-                        window.location.href = "/index"
-                        return true
-                    }
-                    if (JsonDate.code == (-1)) {
-                        alert("登陆失败")
-                        return;
-                    }
-                },
-                error: function (msg) {
-                    console.log("erro" + JSON.stringify(msg));
-                }
-            });
-        }
-    </script>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -108,5 +64,56 @@
 <!-- Bootstrap 4 -->
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!--<script src="../../dist/js/public.js"></script>-->
+<script>
+    function checkFormate() {
+        if ($('#inputEmail').val() == "") {
+            alert("用户名不能为空");
+            return
+        }
+        if ($('#inputPassword').val() == "") {
+
+            alert("密码不能为空");
+            return;
+        }
+        // else if(!/^[0-9]{8}$/.test($('#inputPassword').val())) {
+        //     alert("密码必须为8位数字");
+        //     return;
+        // }
+        login();
+    }
+    function saveCookie(token){
+        //设置名称为name,值为value的Cookie
+        var expdate = new Date();   //初始化时间
+        expdate.setTime(expdate.getTime() + 1000 * 60 * 24*7);   //时间
+        document.cookie = "userName"+"="+token+";expires="+expdate.toGMTString()+";";
+    }
+
+    function login() {
+        let userName = $('#userName').val();
+        let password = $('#password').val();
+        $.ajax({
+            type: "get",
+            url: "/user/login?userName=" + userName + "&password=" + password,
+            dataType: "json",
+            async: false,
+            success: function (JsonDate) {
+                if (JsonDate.code == 0) {
+                    //登陆成功  浏览器写入cookie
+                    let token=JsonDate.data;
+                    saveCookie(token);
+                    window.location.href = "/index"
+                    return true
+                }
+                if (JsonDate.code == (-1)) {
+                    alert("登陆失败")
+                    return;
+                }
+            },
+            error: function (msg) {
+                console.log("erro" + JSON.stringify(msg));
+            }
+        });
+    }
+</script>
 </body>
 </html>
